@@ -1,8 +1,8 @@
 import pygame
-
+import random
 from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE
-
 from game.components.spaceship import SpaceShip
+from game.components.enemies.enemy_manager import EnemyManager
 
 # Game tiene un "Spaceship" - Por lo general esto es iniciliazar un objeto Spaceship en el __init__
 class Game:
@@ -12,10 +12,13 @@ class Game:
         pygame.display.set_icon(ICON)
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.clock = pygame.time.Clock()
-        self.playing = False  # variable de control para salir del ciclo
-        self.game_speed = 20
+        self.playing = False
+        self.game_speed = 10
         self.x_pos_bg = 0
         self.y_pos_bg = 0
+        self.player = SpaceShip()
+        self.enemy_manager = EnemyManager(random.randint(1,1)) #aqui
+
 
         # Game tiene un "Spaceship"
         self.spaceship = SpaceShip()
@@ -46,11 +49,16 @@ class Game:
     def update(self):
         # pass
         self.spaceship.update()
+        self.enemy_manager.update()
 
     def draw(self):
         self.clock.tick(FPS)
         self.screen.fill((255, 255, 255))
         self.draw_background()
+        self.spaceship.draw(self.screen)
+        self.enemy_manager.draw(self.screen)
+        pygame.display.update()
+        pygame.display.flip()
 
 
         # dibujamos el objeto en pantalla

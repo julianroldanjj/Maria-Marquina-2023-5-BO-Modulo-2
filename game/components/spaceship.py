@@ -1,10 +1,11 @@
-import pygame.sprite
-from game.utils.constants import SPACESHIP, SCREEN_WIDTH, SCREEN_HEIGHT
-
+import pygame
+from game.utils.constants import SPACESHIP, SCREEN_HEIGHT, SCREEN_WIDTH
+from pygame.sprite import Sprite
 class SpaceShip(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.image_size = (40, 60)
+        self.image_size = (40
+        , 60)
         self.image = pygame.transform.scale(SPACESHIP, self.image_size)
         self.image_rect = self.image.get_rect()
         self.image_rect.x = self.image_size[0]
@@ -28,3 +29,5 @@ class SpaceShip(pygame.sprite.Sprite):
             self.image_rect.y += 7
         if self.image_rect.bottom > SCREEN_HEIGHT:
             self.image_rect.bottom = SCREEN_HEIGHT
+    def draw(self, screen):
+        screen.blit(self.image, (self.image_rect.x, self.image_rect.y))
