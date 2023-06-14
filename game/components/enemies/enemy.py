@@ -28,6 +28,7 @@ class Enemy(Sprite):
 		self.index = 0
 		self.shooting_time = random.randint(30,50)
 
+
 	def change_movement_x(self):
 		self.index += 1
 		if (self.index >= self.movement_x_for and self.movement_x == "right") or (self.rect.x >= (SCREEN_WIDTH -40)):
