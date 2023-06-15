@@ -1,10 +1,10 @@
 import pygame
 import random
-from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE
+from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, SPACESHIP_BULLET
 from game.components.spaceship import SpaceShip
 from game.components.enemies.enemy_manager import EnemyManager
 
-# Game tiene un "Spaceship" - Por lo general esto es iniciliazar un objeto Spaceship en el __init__
+# Clase principal del juego
 class Game:
     def __init__(self):
         pygame.init()
@@ -17,55 +17,35 @@ class Game:
         self.x_pos_bg = 0
         self.y_pos_bg = 0
         self.player = SpaceShip()
-        self.enemy_manager = EnemyManager(random.randint(1,1)) #aqui
-
-
-        # Game tiene un "Spaceship"
-        self.spaceship = SpaceShip()
-
-
+        self.enemy_manager = EnemyManager(random.randint(1,1))
 
     def run(self):
-        # Game loop: events - update - draw
         self.playing = True
-
-        # while self.playing == True
-        while self.playing: # Mientras el atributo playing (self.playing) sea true "repito"
+        while self.playing:
             self.handle_events()
             self.update()
             self.draw()
         else:
-            print("Something ocurred to quit the game!!!")
+            print("Something occurred to quit the game!!!")
         pygame.display.quit()
         pygame.quit()
 
     def handle_events(self):
-        # Para un "event" (es un elemento) en la lista (secuencia) que me retorna el metodo get()
         for event in pygame.event.get():
-            # si el "event" type es igual a pygame.QUIT entonces cambiamos playing a False
             if event.type == pygame.QUIT:
                 self.playing = False
 
     def update(self):
-        # pass
-        self.spaceship.update()
+        self.player.update()
         self.enemy_manager.update()
 
     def draw(self):
         self.clock.tick(FPS)
         self.screen.fill((255, 255, 255))
         self.draw_background()
-        self.spaceship.draw(self.screen)
+        self.player.draw(self.screen)
         self.enemy_manager.draw(self.screen)
         pygame.display.update()
-        pygame.display.flip()
-
-
-        # dibujamos el objeto en pantalla
-        self.screen.blit(self.spaceship.image, self.spaceship.image_rect)
-
-        pygame.display.update()
-        pygame.display.flip()
 
     def draw_background(self):
         image = pygame.transform.scale(BG, (SCREEN_WIDTH, SCREEN_HEIGHT))
