@@ -16,7 +16,7 @@ class Game:
         self.game_speed = 10
         self.x_pos_bg = 0
         self.y_pos_bg = 0
-        self.player = SpaceShip(10)  # Cambiar el tamaño del bullet aquí
+        self.player = SpaceShip(20)  # Cambiar el tamaño del bullet aquí
         self.enemy_manager = EnemyManager(random.randint(1, 1))
 
     def run(self):
