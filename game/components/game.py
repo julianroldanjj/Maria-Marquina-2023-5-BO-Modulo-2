@@ -16,8 +16,8 @@ class Game:
         self.game_speed = 10
         self.x_pos_bg = 0
         self.y_pos_bg = 0
-        self.player = SpaceShip()
-        self.enemy_manager = EnemyManager(random.randint(1,1))
+        self.player = SpaceShip(10)  # Cambiar el tamaño del bullet aquí
+        self.enemy_manager = EnemyManager(random.randint(1, 1))
 
     def run(self):
         self.playing = True
@@ -26,7 +26,7 @@ class Game:
             self.update()
             self.draw()
         else:
-            print("Something occurred to quit the game!!!")
+            print("¡Algo ocurrió para salir del juego!")
         pygame.display.quit()
         pygame.quit()
 
@@ -38,6 +38,15 @@ class Game:
     def update(self):
         self.player.update()
         self.enemy_manager.update()
+
+        # Verificar colisiones entre balas y enemigos
+        collisions = pygame.sprite.groupcollide(self.player.bullets, self.enemy_manager.enemies, True, True)
+
+        # Verificar colisiones entre el jugador y los enemigos
+        collisions = pygame.sprite.spritecollide(self.player, self.enemy_manager.enemies, True)
+        if collisions:
+            # Aquí puedes realizar las acciones correspondientes cuando hay una colisión con el jugador
+            print("¡Colisión con el jugador!")
 
     def draw(self):
         self.clock.tick(FPS)
